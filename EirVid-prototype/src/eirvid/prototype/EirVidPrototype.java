@@ -4,6 +4,7 @@
  */
 package eirvid.prototype;
 
+import DatabaseManagment.DatabaseCreator;
 import Utilities.Utilities;
 
 /**
@@ -17,6 +18,15 @@ public class EirVidPrototype {
      */
     public static void main(String[] args) {
         Utilities utility = new Utilities();
+        // Connect to database and create tables and add values
+        DatabaseCreator myDatabase = new DatabaseCreator();
+        boolean isDatabaseSetUp = myDatabase.setupDatabase();
+        if(!isDatabaseSetUp){
+            // if we can't connect to database break application
+            return;
+        }else{
+            System.out.println("Success");
+        }
     }
     
 }
