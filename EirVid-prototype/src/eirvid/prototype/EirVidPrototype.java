@@ -4,6 +4,8 @@
  */
 package eirvid.prototype;
 
+import Utilities.Utilities;
+
 /**
  *
  * @author user
@@ -14,7 +16,7 @@ public class EirVidPrototype {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Utilities utility = new Utilities();
     }
     
 }
