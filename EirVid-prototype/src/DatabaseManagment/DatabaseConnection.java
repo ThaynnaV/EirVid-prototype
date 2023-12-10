@@ -10,7 +10,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- *
+ * Class for Database connection. 
+ * Used MySQL Workbench on localhost 
  * @author 2021240
  */
 public class DatabaseConnection {
