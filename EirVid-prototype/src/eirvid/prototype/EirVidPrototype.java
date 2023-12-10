@@ -5,7 +5,9 @@
 package eirvid.prototype;
 
 import DatabaseManagment.Database;
+import Movies.Movies;
 import Utilities.Utilities;
+import java.sql.SQLException;
 
 /**
  *
@@ -16,10 +18,13 @@ public class EirVidPrototype {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         Utilities utility = new Utilities();
         // connect to database and create initial data
         Database db = new Database();
+         // Create object of movies class and get all available movies
+        Movies movies = new Movies(db);
+        movies.listMovieTitles();
     }
     
 }
