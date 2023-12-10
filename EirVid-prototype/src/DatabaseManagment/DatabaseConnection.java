@@ -50,22 +50,6 @@ public class DatabaseConnection {
         }
     }
     
-    /**
-     * Get a connection with database
-     * @return connection as Connection
-     */
-    public Connection getConnection(){
-        return this.conn;
-    }
-    
-    /**
-     * get statement created from connection 
-     * @return statement as Statement
-     */
-    public Statement getStatement(){
-        return this.stmt;
-    }
-    
     //GETTERS
     /**
      * Get database name
@@ -81,4 +65,6 @@ public class DatabaseConnection {
     public Statement getStmt(){
         return this.stmt;
     }
+    
+    
 }

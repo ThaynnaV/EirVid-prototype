@@ -19,31 +19,18 @@ public class DatabaseCreator {
     private String dbName = "";
     
      // CONSTRUCTOR
-    public DatabaseCreator(){}
+    public DatabaseCreator(Statement stmt, Connection conn, String dbName){
+        this.conn = conn;
+        this.stmt = stmt;
+        this.dbName = dbName;
+    }
     
     /**
-     * Set up database.
-     * First creates an object DataBaseConnection class and use it to connect to database.
-     * Then create tables and populate them with initial values
+     * Set up database.First creates an object DataBaseConnection class and use it to connect to database.Then create tables and populate them with initial values
      * @return 
      */
     public boolean setupDatabase(){
         try{
-            //create an object of DataBaseConnection class
-            DatabaseConnection dBConnection = new DatabaseConnection();
-            // first connect to database
-            boolean isConnectedToDatabase = dBConnection.connectToDatabase();
-            // stop program if we can't connect to database
-            if(!isConnectedToDatabase){
-                System.out.println("Can't connect to database");
-                return false;
-            }else{
-                // if connected set statment, connection and db name
-                this.conn = dBConnection.getConnection();
-                this.stmt = dBConnection.getStatement();
-                this.dbName = dBConnection.getDbName();
-            }
-            
             // then create database and tables if not created already
             boolean isCreated = this.createDatabase();
             if(!isCreated){
@@ -72,7 +59,27 @@ public class DatabaseCreator {
                 System.out.println("Error inserting values to rent table");
                 return false;
             }
-                      
+            
+            // INSERT values for initial menu options if values already not exist
+            boolean isMenuOptionsCreated = this.createMenuOptions();
+            if(!isMenuOptionsCreated){
+                System.out.println("Error inserting values to menu options table");
+                return false;
+            }
+            
+            // INSERT values for initial menus if values already not exist
+            boolean isMenusCreated = this.createMenus();
+            if(!isMenusCreated){
+                System.out.println("Error inserting values to menu table");
+                return false;
+            }
+            
+            // INSERT values for initial menu items (menu options on each menu) if values already not exist
+            boolean isMenuItemsCreated = this.createMenuItems();
+            if(!isMenuItemsCreated){
+                System.out.println("Error inserting values to menu items table");
+                return false;
+            }          
             // if everything is ok return true
             return true;
         } catch(ClassNotFoundException | IllegalAccessException | InstantiationException | SQLException e){
@@ -100,8 +107,8 @@ public class DatabaseCreator {
             // Create table for Users
             this.stmt.execute(
                     "CREATE TABLE IF NOT EXISTS user ("
-                            + "userId INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,"
-                            + "username VARCHAR(30),"
+                            + "userId INT(10) NOT NULL PRIMARY KEY,"
+                            + "email VARCHAR(30),"
                             + "password VARCHAR(30)"
                             + ");"
             );
@@ -109,7 +116,7 @@ public class DatabaseCreator {
             // Create table for Movies
             this.stmt.execute(
                     "CREATE TABLE IF NOT EXISTS movie ("
-                            + "movieId INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,"
+                            + "movieId INT(10) NOT NULL PRIMARY KEY,"
                             + "title VARCHAR(30)"
                             + ");"
             );
@@ -117,7 +124,7 @@ public class DatabaseCreator {
             // Create table for Rent
             this.stmt.execute(
                     "CREATE TABLE IF NOT EXISTS rent ("
-                            + "rentId INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,"
+                            + "rentId INT(10) NOT NULL PRIMARY KEY,"
                             + "description VARCHAR(40),"
                             + "length INT(10),"
                             + "price INT(10)"
@@ -127,7 +134,7 @@ public class DatabaseCreator {
             // Create table Rented movies
             this.stmt.execute(
                     "CREATE TABLE IF NOT EXISTS rented ("
-                            + "rentedId INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,"
+                            + "rentedId INT(10) NOT NULL PRIMARY KEY,"
                             + "userId INT(10),"
                             + "movieId INT(10),"
                             + "rentId INT(10),"
@@ -135,6 +142,34 @@ public class DatabaseCreator {
                             + "FOREIGN KEY(userId) REFERENCES user(userId),"
                             + "FOREIGN KEY(movieId) REFERENCES movie(movieId),"
                             + "FOREIGN KEY(rentId) REFERENCES rent(rentId)"
+                            + ");"
+            );
+            
+            // Create table for MenuOption
+            this.stmt.execute(
+                    "CREATE TABLE IF NOT EXISTS menuOption ("
+                            + "menuOptionId INT(10) NOT NULL PRIMARY KEY,"
+                            + "menuOption VARCHAR(40)"
+                            + ");"
+            );
+            
+            // Create table for Menu
+            this.stmt.execute(
+                    "CREATE TABLE IF NOT EXISTS menu ("
+                            + "menuId INT(10) NOT NULL PRIMARY KEY,"
+                            + "text VARCHAR(40),"
+                            + "title VARCHAR(40)"
+                            + ");"
+            );
+            
+            // Create table for MenuItems
+            this.stmt.execute(
+                    "CREATE TABLE IF NOT EXISTS menuItems ("
+                            + "menuItemsId INT(10) NOT NULL PRIMARY KEY,"
+                            + "menuId INT(10),"
+                            + "menuOptionId INT(10),"
+                            + "FOREIGN KEY(menuId) REFERENCES menu(menuId),"
+                            + "FOREIGN KEY(menuOptionId) REFERENCES menuOption(menuOptionId)"
                             + ");"
             );
                                 
@@ -152,23 +187,9 @@ public class DatabaseCreator {
      * @return - true if is success
      */
     public boolean createUsers(){
-        try{
-            this.stmt.execute(
-                    "INSERT IGNORE INTO user (username, password)\n"
-                    + "VALUES ('admin', 'admin'); \n"    
-                         
-            );
-            this.stmt.execute(
-                    "INSERT IGNORE INTO user (username, password)\n"
-                    + "VALUES ('test', '123'); \n"    
-                         
-            );
-            return true;
-        }catch (SQLException e){
-            //e.printStackTrace();
-            System.out.println("Error: "+e.getMessage());
-            return false; 
-        }      
+        String value =  "INSERT IGNORE INTO user (userId, email, password)\n"
+                    + "VALUES (1, 'admin@gmial.com', 'admin'),(2,'test@gmail.com', '1234'); \n";
+        return this.insertValuesToTable(value);
     }
     
      /**
@@ -176,35 +197,64 @@ public class DatabaseCreator {
      * @return - true if is success
      */
     public boolean createMovies(){
-        try{
-            this.stmt.execute(
-                    "INSERT IGNORE INTO movie (title)\n"
-                    + "VALUES ('Dune'), ('Barbie'), ('Avatar'), ('Talk To Me'), ('Hobbit'), ('A Quiet Place'), ('The Nun'), ('Scary Movie'), ('Get Out'), ('Oppenheimer'); \n"    
-            );
-            return true;
-        }catch (SQLException e){
-            //e.printStackTrace();
-            System.out.println("Error: "+e.getMessage());
-            return false; 
-        }      
+        String value = "INSERT IGNORE INTO movie (movieId, title)\n"
+                    + "VALUES (1, 'Dune'), (2,'Barbie'), (3,'Avatar'), (4,'Talk To Me'), (5,'Hobbit'), (6,'A Quiet Place'), (7,'The Nun'), (8,'Scary Movie'), (9,'Get Out'), (10,'Oppenheimer'); \n";
+        return this.insertValuesToTable(value);
     }
     
-      /**
+    /**
      * Insert set up values for User
      * @return - true if is success
      */
     public boolean createRentOptions(){
+        String value = "INSERT IGNORE INTO rent (rentId, description, length, price)\n"
+                    + "VALUES (1,'One minute rent', 1, 5), (2,'One hour rent', 60, 10), (3,'One day rent', 1440, 20); \n";
+        return this.insertValuesToTable(value);
+    }
+    
+    /**
+     * Insert set up values for menu options
+     * @return - true if is success
+     */
+    public boolean createMenuOptions(){
+        String value = "INSERT IGNORE INTO menuOption (menuOptionId, menuOption)\n"
+                    + "VALUES (1,'Register'),(2,'Login'),(3,'Logout'),(4,'Back'),(5,'Exit'),(6,'Rent Movie'),(7,'See rented movies'),(8,'View Recommended Movies'); \n";
+        return this.insertValuesToTable(value);
+    }
+    
+    /**
+     * Insert values for all available menus
+     * @return - true if is success
+     */
+    public boolean createMenus(){
+        String value = "INSERT IGNORE INTO menu (menuId, text, title)\n"
+                    + "VALUES (1, 'Select option above by typing a number next to item', 'Login Menu'),(2,'Select option above by typing a number next to item', 'Main Menu'),(3,'Select Movie to Rent by typing a number next to item', 'Movie Menu'),(4,'Select Rent Duration by typing a number next to item', 'Rent Menu'); \n";
+        return this.insertValuesToTable(value);
+    }
+    
+     /**
+     * Insert values for all available menus
+     * @return - true if is success
+     */
+    public boolean createMenuItems(){
+        String value = "INSERT IGNORE INTO menuItems (menuItemsId, menuId, menuOptionId)\n"
+                    + "VALUES (1, 1, 2),(2, 1, 1),(3, 1, 5), \n" // login menu have options login, register, exit  
+                    + "(4, 2, 6),(5, 2, 7),(6, 2, 8),(7, 2, 3),(8, 2, 5), \n" // main menu have options rent movie, see recommended movies, See your rented movies, logout, exit
+                    + "(9,3, 4), \n" // movie menu will have option back and movies will be added later
+                    + "(10, 4, 4); \n"; // rent menu will have option back and rent options will be added later
+        return this.insertValuesToTable(value);
+    }
+    
+    public boolean insertValuesToTable(String value){
         try{
-            this.stmt.execute(
-                    "INSERT IGNORE INTO rent (description, length, price)\n"
-                    + "VALUES ('One minute rent', 1, 5), ('One hour rent', 60, 10), ('One day rent', 1440, 20); \n"    
-            );
+            this.stmt.execute(value);
             return true;
         }catch (SQLException e){
             //e.printStackTrace();
             System.out.println("Error: "+e.getMessage());
             return false; 
-        }      
+        }  
     }
+    
 }
 
