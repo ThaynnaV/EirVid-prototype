@@ -14,6 +14,27 @@ public class Utilities {
     private final Scanner myKB = new Scanner(System.in); // create myKb from scanner
     
     /**
+     * Get integer value from user
+     * Keep asking until user types it correctly
+     * @param message - message to display to user
+     * @return user input value as integer
+     */
+    public int getUserInteger(String message){
+        int userInput = 0; //set userInput to 0 initially
+        boolean isValid;
+        do{
+            System.out.println(message);
+            try{
+                userInput = this.myKB.nextInt();
+                isValid = true;
+            }catch(Exception e){
+                isValid = false;
+            }   
+        }while(!isValid);
+        return userInput;
+    }
+    
+    /**
      * Get String value from user
      * Keep asking until user type it correctly
      * @param message - message to display to user
@@ -32,5 +53,6 @@ public class Utilities {
             }   
         }while(!isValid);
         return userInput;
-    }
+    }    
+    
 }

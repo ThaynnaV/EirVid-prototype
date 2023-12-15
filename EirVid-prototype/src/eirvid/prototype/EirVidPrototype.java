@@ -5,6 +5,7 @@
 package eirvid.prototype;
 
 import DatabaseManagment.Database;
+import Menu.LoginMenu;
 import Movies.Movies;
 import Utilities.Utilities;
 import java.sql.SQLException;
@@ -25,6 +26,9 @@ public class EirVidPrototype {
          // Create object of movies class and get all available movies
         Movies movies = new Movies(db);
         movies.listMovieTitles();
+         // Option to login or register or exit
+        LoginMenu loginMenu = new LoginMenu(db);
+        loginMenu.showMenu();
     }
     
 }
