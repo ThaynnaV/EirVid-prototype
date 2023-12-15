@@ -10,10 +10,14 @@ package Users;
  */
 public class User implements UserInterface{
     private String password;
-    private String username;
+    private String email;
     
-    public void User(){}
-
+    public User(){}
+    
+    public User(String email, String password){
+        this.email = email;
+        this.password = password;
+    }
     /**
      * Implementing an Interface method setPassord
      * Method will set User password
@@ -25,8 +29,8 @@ public class User implements UserInterface{
     }
 
     @Override
-    public void setUserName(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
@@ -35,8 +39,8 @@ public class User implements UserInterface{
     }
 
     @Override
-    public String getUserName() {
-        return this.username;
+    public String getEmail() {
+        return this.email;
     }
  
     

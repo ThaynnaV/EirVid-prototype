@@ -10,8 +10,8 @@ package Users;
  */
 public interface UserInterface {
     void setPassword(String password); // Sett password for user
-    void setUserName(String userName); // Sett username for user
+    void setEmail(String email); // Sett username for user
     String getPassword(); // Sett password for user
-    String getUserName(); // Sett username for user
+    String getEmail(); // Sett username for user
     
 }
