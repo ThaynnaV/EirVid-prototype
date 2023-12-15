@@ -4,8 +4,8 @@
  */
 package Menu;
 
-
 import DatabaseManagment.Database;
+import Users.UserManagment;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,6 +22,7 @@ public class LoginMenu implements LoginMenuInterface {
         this.db = db;
         this.geLoginMenuFromDatabase();
     }
+    
     private void geLoginMenuFromDatabase() throws SQLException{
         String useDatabaseByName = "USE " + this.db.getDbName();
         this.db.executeStmt(useDatabaseByName);
@@ -32,18 +33,18 @@ public class LoginMenu implements LoginMenuInterface {
         String menuTitle = null;
         String menuText = null;
         ArrayList<MenuItem> menuItems = new ArrayList<>();
-        
+        int menuItemCount = 0;
         try (ResultSet rs = this.db.executeStmtQuery(query)) {
             while(rs.next()){
+                menuItemCount++;
                 // Menu -- same for all menu options
                 rs.getInt("menuId");
                 menuTitle = rs.getString("title");
                 menuText = rs.getString("text");
                 // menu options -- distinct
-                int menuOptionId = rs.getInt("menuOptionId");
                 String menuOption = rs.getString("menuOption");
                 // First create all menu items for menu and add them to List
-                MenuItem newMenuItem = new MenuItem(menuOptionId, menuOption);
+                MenuItem newMenuItem = new MenuItem(menuItemCount, menuOption);
                 menuItems.add(newMenuItem);
             }
             // Create a menu with all menu items
@@ -51,11 +52,36 @@ public class LoginMenu implements LoginMenuInterface {
         }
     }
     
+    @Override
     public Menu getMenu(){
         return this.menu;
     }
     
-    public void showMenu(){
-        this.menu.showMenu();
+    /**
+     * 
+     * @param userManagment
+     * @return true if logged in false if exit application 
+     */
+    @Override
+    public boolean showMenu(UserManagment userManagment){
+        boolean isDisplayMenu = true;
+        boolean isLoggedIn = false;
+        do{
+            int selectedOption = this.menu.showMenu();
+            switch(selectedOption){
+                // Login
+                case 1: if (userManagment.login()){
+                            isLoggedIn = true;
+                        }; 
+                        break;
+                // Register    
+                case 2: userManagment.register(); break;
+                // Exit application    
+                case 3: 
+                default: isDisplayMenu = false; break;
+            }
+        }while(isDisplayMenu && !isLoggedIn);
+        
+        return isLoggedIn;        
     }
 }
