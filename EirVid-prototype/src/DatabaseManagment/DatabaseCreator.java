@@ -107,8 +107,7 @@ public class DatabaseCreator {
             // Create table for Users
             this.stmt.execute(
                     "CREATE TABLE IF NOT EXISTS user ("
-                            + "userId INT(10) NOT NULL PRIMARY KEY,"
-                            + "email VARCHAR(30),"
+                            + "email VARCHAR(30) NOT NULL PRIMARY KEY,"
                             + "password VARCHAR(30)"
                             + ");"
             );
@@ -135,11 +134,11 @@ public class DatabaseCreator {
             this.stmt.execute(
                     "CREATE TABLE IF NOT EXISTS rented ("
                             + "rentedId INT(10) NOT NULL PRIMARY KEY,"
-                            + "userId INT(10),"
+                            + "email VARCHAR(30),"
                             + "movieId INT(10),"
                             + "rentId INT(10),"
                             + "date TIMESTAMP,"
-                            + "FOREIGN KEY(userId) REFERENCES user(userId),"
+                            + "FOREIGN KEY(email) REFERENCES user(email),"
                             + "FOREIGN KEY(movieId) REFERENCES movie(movieId),"
                             + "FOREIGN KEY(rentId) REFERENCES rent(rentId)"
                             + ");"
@@ -187,8 +186,8 @@ public class DatabaseCreator {
      * @return - true if is success
      */
     public boolean createUsers(){
-        String value =  "INSERT IGNORE INTO user (userId, email, password)\n"
-                    + "VALUES (1, 'admin@gmial.com', 'admin'),(2,'test@gmail.com', '1234'); \n";
+        String value =  "INSERT IGNORE INTO user (email, password)\n"
+                    + "VALUES ('admin@gmail.com', 'admin'),('test@gmail.com', '1234'); \n";
         return this.insertValuesToTable(value);
     }
     
@@ -257,4 +256,6 @@ public class DatabaseCreator {
     }
     
 }
+
+
 
