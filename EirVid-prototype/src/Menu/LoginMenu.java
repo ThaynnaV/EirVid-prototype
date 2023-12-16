@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Menu;
-
 import DatabaseManagment.Database;
 import Users.UserManagment;
 import java.sql.ResultSet;
@@ -38,7 +37,6 @@ public class LoginMenu implements LoginMenuInterface {
             while(rs.next()){
                 menuItemCount++;
                 // Menu -- same for all menu options
-                rs.getInt("menuId");
                 menuTitle = rs.getString("title");
                 menuText = rs.getString("text");
                 // menu options -- distinct
@@ -47,6 +45,7 @@ public class LoginMenu implements LoginMenuInterface {
                 MenuItem newMenuItem = new MenuItem(menuItemCount, menuOption);
                 menuItems.add(newMenuItem);
             }
+            rs.close();
             // Create a menu with all menu items
             this.menu = new Menu(menuTitle, menuText,menuItems);
         }
@@ -78,7 +77,10 @@ public class LoginMenu implements LoginMenuInterface {
                 case 2: userManagment.register(); break;
                 // Exit application    
                 case 3: 
-                default: isDisplayMenu = false; break;
+                default:
+                    isDisplayMenu = false; 
+                    isLoggedIn = false; 
+                    break;
             }
         }while(isDisplayMenu && !isLoggedIn);
         

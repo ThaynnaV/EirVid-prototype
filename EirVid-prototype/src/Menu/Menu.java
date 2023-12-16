@@ -12,16 +12,21 @@ import java.util.ArrayList;
  * @author 2021288
  */
 public class Menu implements MenuInterface {
-    ArrayList<MenuItem> menuItems = new ArrayList<>();
-    int menuCounter = 0;
-    String menuTitle;
-    String menuText;
+    private ArrayList<MenuItem> menuItems = new ArrayList<>();
+    private String menuTitle;
+    private String menuText;
     private Utilities utility = new Utilities();
-        
+    private MenuItem selectedOption;
+    
     public Menu(){}
     
     public Menu(String title){
         this.menuTitle = title;
+    }
+    
+    public Menu(String title, String menuText){
+        this.menuTitle = title;
+        this.menuText = menuText;
     }
     
     public Menu(String menuTitle, String menuText, ArrayList<MenuItem> menuItems){
@@ -30,18 +35,60 @@ public class Menu implements MenuInterface {
         this.menuItems = menuItems;
     }
     
+    @Override
     public void addMenuItem(int selector, String description){
-        menuCounter++;
         MenuItem newItem = new MenuItem(selector,description);
-        menuItems.add(menuCounter, new MenuItem(selector, description));
+        menuItems.add(new MenuItem(selector, description));
     }
     
-    public void addMenuItems(String[] optionsArray){
-        for( int i=0; i< optionsArray.length; i++){
-            this.addMenuItem(i, optionsArray[i]);
-        }
+    // GETTERS 
+    @Override
+    public ArrayList<MenuItem> getMenuItems(){
+        return this.menuItems;
     }
-    
+    @Override
+    public String getMenuTitle(){
+        return this.menuTitle;
+    }
+    @Override
+    public String getMenuText(){
+        return this.menuText;
+    }
+    @Override
+    public int getMenuItemsSize(){
+        return this.menuItems.size();
+    }
+    @Override
+    public MenuItem getSelectedOption(){
+        return this.selectedOption;
+    }
+    @Override
+    public MenuItem getMenuItemByIndex(int index){
+        return this.menuItems.get(index);
+    }
+        
+    // SETTERS
+    @Override
+    public void setMenuItems(ArrayList<MenuItem> menuItems){
+        this.menuItems = menuItems;
+    }
+    @Override
+    public void setMenuTitle(String menuTitle){
+        this.menuTitle = menuTitle;
+    }
+    @Override
+    public void setMenuText(String menuText){
+        this.menuText = menuText;
+    }
+    @Override
+    public void setSelectedOption(MenuItem selectedOption){
+        this.selectedOption = selectedOption;
+    }
+    @Override
+    public void resetSelectedOption(){
+        this.selectedOption = null;
+    }
+    // METHODS
     @Override
     public int showMenu(){
         System.out.println(this.menuTitle);
@@ -49,7 +96,7 @@ public class Menu implements MenuInterface {
         for(MenuItem menu_item : this.menuItems) {
             System.out.println(menu_item.getSelector() + ". " + menu_item.getDescription());
         }
-        return this.utility.getUserInteger(this.menuText);
+        return this.utility.getUserOptionInRange(this.menuText,1,this.menuItems.size());
     }
       
 }

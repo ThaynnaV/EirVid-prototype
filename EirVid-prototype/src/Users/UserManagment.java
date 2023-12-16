@@ -53,6 +53,10 @@ public class UserManagment implements UserManagmentInterface{
         return isLoggedIn;
     }
     
+    public User getCurrentUser(){
+        return this.currentUser;
+    }
+    
     @Override
     public boolean logout() {
        // Reset current user
