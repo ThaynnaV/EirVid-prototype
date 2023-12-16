@@ -9,7 +9,7 @@ package Movies;
  * @author 2021345
  */
 public class Movie implements MovieInterface {
-    private int id;
+     private int id;
     private String title;
     
     public Movie(){}

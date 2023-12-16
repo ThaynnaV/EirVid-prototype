@@ -13,9 +13,10 @@ import java.util.ArrayList;
  *
  * @author 2021345
  */
-public class Movies {
+public class Movies implements MoviesInterface {
     private final ArrayList<Movie> movies = new ArrayList<>();
     private final Database db;
+    
     public Movies(Database db ) throws SQLException{
         this.db = db;
         this.getMoviesFromDatabase();
@@ -34,10 +35,22 @@ public class Movies {
         }
     }
     
+    @Override
     public ArrayList<Movie> getMoviesList(){
         return this.movies;
     }
     
+    @Override
+    public Movie getMovieByIndex(int index){
+        return this.movies.get(index);
+    }
+    
+    @Override
+    public int getMovieIdByIndex(int index){
+        return this.movies.get(index).getMovieId();
+    }
+    
+    @Override
     public void listMovieTitles(){
         // Reference stack overflow: https://stackoverflow.com/questions/34526819/print-arraylist-in-java
         for(Movie mv : movies) {
