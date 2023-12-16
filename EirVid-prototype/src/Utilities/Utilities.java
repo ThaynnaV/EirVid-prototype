@@ -28,8 +28,11 @@ public class Utilities {
                 userInput = this.myKB.nextInt();
                 isValid = true;
             }catch(Exception e){
+                System.out.println("Invalid input. Please enter a valid integer.");
                 isValid = false;
-            }   
+            }
+            // Consume the input
+            this.myKB.nextLine();
         }while(!isValid);
         return userInput;
     }
@@ -53,7 +56,7 @@ public class Utilities {
             }   
         }while(!isValid);
         return userInput;
-    }  
+    }
     /**
      * Get user option from menu as integer
      * Keep asking until user type it correctly
@@ -90,5 +93,4 @@ public class Utilities {
         // return user input
         return userInput;
     }    
-    
 }

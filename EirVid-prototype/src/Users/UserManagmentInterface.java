@@ -12,5 +12,7 @@ public interface UserManagmentInterface {
     boolean login();
     boolean logout();
     boolean register();
+    User getCurrentUser();
+    
 }
 

@@ -8,8 +8,6 @@ import DatabaseManagment.Database;
 import Utilities.Utilities;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  *
@@ -17,15 +15,17 @@ import java.util.Map;
  */
 public class UserManagment implements UserManagmentInterface{
     private final Utilities utility = new Utilities();
-    // list of registred users, keep in memory for now, later implement database
-    private static final Map<String, String> registeredUsers = new HashMap<>();
-    private User currentUser = new User();
     private Database db;
+    private User currentUser = new User();
     
     public UserManagment(Database db){
         this.db = db;
     }
     
+    // GETTERS
+    public User getCurrentUser(){
+        return this.currentUser;
+    }
     /**
      * Keep asking to login until logged in or exit option selected
      * @return 
@@ -41,8 +41,8 @@ public class UserManagment implements UserManagmentInterface{
             // Get user password
             String password = this.utility.getUserText("Enter your password: "); // to do add minimum password complexity later?
             // create loging user with credentials that user provided
-            User loginUser = new User(email, password);
-            isLoggedIn = this.checkUserCredentials(loginUser);
+            this.currentUser = new User(email, password);
+            isLoggedIn = this.checkUserCredentials(this.currentUser);
             if(!isLoggedIn){
                 int option = this.utility.getUserInteger("Error on login. Type 1 to try again type 2 or any other number to exit");
                 if(option != 1){
@@ -51,10 +51,6 @@ public class UserManagment implements UserManagmentInterface{
             }
         }
         return isLoggedIn;
-    }
-    
-    public User getCurrentUser(){
-        return this.currentUser;
     }
     
     @Override
@@ -145,7 +141,6 @@ public class UserManagment implements UserManagmentInterface{
             this.db.executeStmt(useDatabaseByName);
             String query = "SELECT * from user \n" +
                             "WHERE email = '" + user.getEmail() + "'"; // email should be unique
-            System.out.println(query);
             try (ResultSet rs = this.db.executeStmtQuery(query)) {
                 if (rs.next() == false) { 
                     System.out.println("No user with that email found."); 
