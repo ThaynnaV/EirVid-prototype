@@ -17,7 +17,7 @@ public class Menu implements MenuInterface {
     String menuTitle;
     String menuText;
     private Utilities utility = new Utilities();
-    
+        
     public Menu(){}
     
     public Menu(String title){

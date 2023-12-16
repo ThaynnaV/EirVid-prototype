@@ -133,7 +133,7 @@ public class DatabaseCreator {
             // Create table Rented movies
             this.stmt.execute(
                     "CREATE TABLE IF NOT EXISTS rented ("
-                            + "rentedId INT(10) NOT NULL PRIMARY KEY,"
+                            + "rentedId INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,"
                             + "email VARCHAR(30),"
                             + "movieId INT(10),"
                             + "rentId INT(10),"
@@ -156,7 +156,7 @@ public class DatabaseCreator {
             this.stmt.execute(
                     "CREATE TABLE IF NOT EXISTS menu ("
                             + "menuId INT(10) NOT NULL PRIMARY KEY,"
-                            + "text VARCHAR(40),"
+                            + "text VARCHAR(200),"
                             + "title VARCHAR(40)"
                             + ");"
             );

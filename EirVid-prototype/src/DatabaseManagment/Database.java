@@ -61,7 +61,9 @@ public class Database {
         return this.stmt.executeQuery(query);
     }
     
+    public Statement getStatment(){
+        return this.stmt;
+    }
+    
     
 }
-
-
