@@ -12,7 +12,7 @@ import java.sql.Statement;
 /**
  * Class for all Database methods 
  * Used MySQL Workbench on localhost 
- * @author 2021240
+ * @author Gabriel 2021240
  */
 public class Database {
     //create an object of DataBaseConnection class
@@ -49,23 +49,40 @@ public class Database {
         }
     }
     
-    public String getDbName(){
-        return this.dbName;
-    }
-    
-    public void executeStmt(String query) throws SQLException, SQLException{
-        this.stmt.execute(query);
-    }
-    
-    public ResultSet executeStmtQuery(String query) throws SQLException{
-        return this.stmt.executeQuery(query);
-    }
-    
+    // GETTERS
     public Statement getStatment(){
         return this.stmt;
     }
     public Connection getConn(){
         return this.conn;
     }
+    /**
+     * Return database name
+     * @return 
+     */
+    public String getDbName(){
+        return this.dbName;
+    }
+    
+    /**
+     * Will execute query
+     * @param query
+     * @throws SQLException 
+     */
+    public void executeStmt(String query) throws SQLException, SQLException{
+        this.stmt.execute(query);
+    }
+    
+    /**
+     * Will execute stmt query
+     * @param query
+     * @return
+     * @throws SQLException 
+     */
+    public ResultSet executeStmtQuery(String query) throws SQLException{
+        return this.stmt.executeQuery(query);
+    }
+   
+    
     
 }

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author 2021240
+ * @author Gabriel 2021240
  */
 public interface RentOptionsInterface {
    void displayRentOptions();

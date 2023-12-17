@@ -6,7 +6,7 @@ package Rent;
 
 /**
  For renting
- * @author 2021240
+ * @author Gabriel 2021240
  */
 public interface RentInterface {
     int getRentId();

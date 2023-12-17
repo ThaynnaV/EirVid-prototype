@@ -10,7 +10,7 @@ import java.time.Instant;
 
 /**
  *
- * @author 2021240
+ * @author Gabriel 2021240
  */
 public class Rented implements RentedInterface{
     private String email;

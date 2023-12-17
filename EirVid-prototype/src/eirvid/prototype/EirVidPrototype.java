@@ -19,7 +19,7 @@ import java.sql.SQLException;
 
 /**
  *
- * @authors 2021345, 2021267, 2021288, 2021240   
+ * @authors 2021345, 2021267, 2021288, Gabriel 2021240   
  */
 public class EirVidPrototype {
 
@@ -33,10 +33,11 @@ public class EirVidPrototype {
         Database db = new Database();
         // Movies class object -- has all available movies
         Movies movies = new Movies();
-        
+        // Movie Reader object -- use to reads CSV file and save movies to database
         MovieReader movieReader = new MovieReader(movies, db);
-        
+        // if file are read is siccess
         boolean success = movieReader.readMoviesFromCSV("./Movie_Metadata.csv");
+        // if movie file is not read break application with error message
         if(!success){
             System.out.println("Error reading movies from file");
         }

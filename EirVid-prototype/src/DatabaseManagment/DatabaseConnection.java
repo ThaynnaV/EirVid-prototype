@@ -11,7 +11,7 @@ import java.sql.SQLException;
 /**
  * Class for Database connection. 
  * Used MySQL Workbench on localhost 
- * @author 2021240
+ * @author Gabriel 2021240
  */
 public class DatabaseConnection {
      // Connection string

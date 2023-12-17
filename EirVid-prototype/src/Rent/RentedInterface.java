@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 /**
  *
- * @author 2021240
+ * @author Gabriel 2021240
  */
 public interface RentedInterface {
     String getEmail();

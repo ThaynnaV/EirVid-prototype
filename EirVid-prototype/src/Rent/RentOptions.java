@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author 2021240
+ * @author Gabriel 2021240
  */
 public class RentOptions implements RentOptionsInterface{
     private Database db;

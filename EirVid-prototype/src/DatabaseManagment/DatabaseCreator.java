@@ -11,7 +11,7 @@ import java.sql.Statement;
 /**
  * Class that generates all tables and fill them with initial data.
  * It use DatabaseConnection class to connect to database
- * @author 2021240
+ * @author Gabriel 2021240
  */
 public class DatabaseCreator {
     private Statement stmt;
