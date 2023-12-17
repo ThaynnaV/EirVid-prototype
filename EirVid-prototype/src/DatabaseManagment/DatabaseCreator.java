@@ -47,11 +47,11 @@ public class DatabaseCreator {
             }
             
             // INSERT values for initial movies if values already not exist
-            boolean isMoviesCreated = this.createMovies();
-            if(!isMoviesCreated){
-                System.out.println("Error inserting values to movie table");
-                return false;
-            }
+            //boolean isMoviesCreated = this.createMovies();
+            //if(!isMoviesCreated){
+            //    System.out.println("Error inserting values to movie table");
+            //    return false;
+            //}
             
             // INSERT values for initial rent options if values already not exist
             boolean isRentCreated = this.createRentOptions();
@@ -107,17 +107,34 @@ public class DatabaseCreator {
             // Create table for Users
             this.stmt.execute(
                     "CREATE TABLE IF NOT EXISTS user ("
-                            + "email VARCHAR(30) NOT NULL PRIMARY KEY,"
+                            + "email VARCHAR(100) NOT NULL PRIMARY KEY,"
                             + "password VARCHAR(30)"
                             + ");"
             );
             
             // Create table for Movies
-            this.stmt.execute(
+            /*this.stmt.execute(
                     "CREATE TABLE IF NOT EXISTS movie ("
                             + "movieId INT(10) NOT NULL PRIMARY KEY,"
                             + "title VARCHAR(30)"
                             + ");"
+            );*/
+            this.stmt.execute(
+                "CREATE TABLE IF NOT EXISTS movie ("
+                        + "movieId INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,"
+                        + "title VARCHAR(255),"
+                        + "original_language VARCHAR(10),"
+                        + "original_title VARCHAR(255),"
+                        + "overview TEXT,"
+                        + "popularity DOUBLE,"
+                        + "release_date VARCHAR(28),"
+                        + "runtime INT,"
+                        + "tagline VARCHAR(255),"
+                        + "vote_average DOUBLE,"
+                        + "vote_count INT,"
+                        + "price DOUBLE,"
+                        + "UNIQUE KEY unique_title_release_date (title, release_date)"
+                        + ");"
             );
             
             // Create table for Rent
@@ -134,7 +151,7 @@ public class DatabaseCreator {
             this.stmt.execute(
                     "CREATE TABLE IF NOT EXISTS rented ("
                             + "rentedId INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,"
-                            + "email VARCHAR(30),"
+                            + "email VARCHAR(100),"
                             + "movieId INT(10),"
                             + "rentId INT(10),"
                             + "date TIMESTAMP,"

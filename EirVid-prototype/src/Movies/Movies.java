@@ -58,4 +58,8 @@ public class Movies implements MoviesInterface {
         }
     }
     
+    public Database getDb(){
+        return this.db;
+    }
+    
 }

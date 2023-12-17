@@ -9,6 +9,7 @@ import Menu.LoginMenu;
 import Menu.MainMenu;
 import Menu.MovieMenu;
 import Menu.RentMenu;
+import Movies.MovieReader;
 import Movies.Movies;
 import Movies.RentedMovies;
 import Rent.RentOptions;
@@ -31,6 +32,12 @@ public class EirVidPrototype {
         Database db = new Database();
         // Movies class object -- has all available movies
         Movies movies = new Movies(db);
+        
+        MovieReader movieReader = new MovieReader(movies);
+        boolean success = movieReader.readMoviesFromCSV("./Movie_Metadata.csv");
+        if(!success){
+            System.out.println("Error reading movies from file");
+        }
         // Rent Options class object -- has all available rent options (different rent prices and durations)
         RentOptions rentOptions = new RentOptions(db);
         // User managment class object -- to handle user managment 

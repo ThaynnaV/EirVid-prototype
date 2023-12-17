@@ -64,6 +64,8 @@ public class Database {
     public Statement getStatment(){
         return this.stmt;
     }
-    
+    public Connection getConn(){
+        return this.conn;
+    }
     
 }
