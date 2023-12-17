@@ -6,7 +6,7 @@ package Movies;
 
 /**
  *
- * @author 2021345
+ * @author Alany 2021345
  */
 public interface MovieInterface {
     int getMovieId();    

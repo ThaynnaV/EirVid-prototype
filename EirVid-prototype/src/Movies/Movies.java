@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author 2021345
+ * @author Alany 2021345
  */
 public class Movies {
     private final ArrayList<Movie> movies = new ArrayList<>();
