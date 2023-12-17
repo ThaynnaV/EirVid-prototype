@@ -6,12 +6,12 @@ package Users;
 
 /**
  *
- * @author 2021267
+ * @author 2021267 / Magdalena
  */
 public interface UserInterface {
-    void setPassword(String password); // Sett password for user
-    void setEmail(String email); // Sett username for user
-    String getPassword(); // Sett password for user
-    String getEmail(); // Sett username for user
+    void setPassword(String password); // Set password for user
+    void setEmail(String email); // Set username for user
+    String getPassword(); // Set password for user
+    String getEmail(); // Set username for user
     
 }

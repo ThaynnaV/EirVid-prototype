@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 /**
  *
- * @author 2021267
+ * @author 2021267 / Magdalena
  */
 public class UserManagment implements UserManagmentInterface{
     private final Utilities utility = new Utilities();
@@ -102,6 +102,7 @@ public class UserManagment implements UserManagmentInterface{
         return isRegistered;
     }
 
+    //Check if credentials inputed are valid.
     private boolean checkUserCredentials(User user){
         String useDatabaseByName = "USE " + this.db.getDbName();
         boolean isSuccess = false;
@@ -133,7 +134,8 @@ public class UserManagment implements UserManagmentInterface{
             return false;
         }
     }
-    
+   
+    //Check with database if the user is already there.
     private boolean checkIfUserExists(User user){
         String useDatabaseByName = "USE " + this.db.getDbName();
         boolean isUserFound = false;
@@ -156,6 +158,7 @@ public class UserManagment implements UserManagmentInterface{
         }
     }
     
+    //add User to db
     private boolean insertUserToDatabase(User user){
         String useDatabaseByName = "USE " + this.db.getDbName();
         try {
