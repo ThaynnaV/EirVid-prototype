@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author 2021288
+ * @author Thaynna 2021288
  */
 public class MovieMenu implements MovieMenuInterface{
    private Menu menu = new Menu("Movie Menu", "Select Movie by typing a number next to movie");

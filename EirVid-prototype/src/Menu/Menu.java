@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author 2021288
+ * @author Thaynna 2021288
  */
 public class Menu implements MenuInterface {
     private ArrayList<MenuItem> menuItems = new ArrayList<>();

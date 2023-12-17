@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author 2021288
+ * @author Thaynna 2021288
  */
 public class RentMenu implements RentMenuInterface{
     private Menu menu = new Menu("Rent Menu", "Select Rent Duration by typing a number next to item");

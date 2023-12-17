@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author 2021288
+ * @author Thaynna 2021288
  */
 public class LoginMenu implements LoginMenuInterface {
     private Database db;

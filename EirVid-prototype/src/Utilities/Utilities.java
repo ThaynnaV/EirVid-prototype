@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author 2021267
+ * @author 2021267 / Magdalena
  */
 public class Utilities {
     private final Scanner myKB = new Scanner(System.in); // create myKb from scanner

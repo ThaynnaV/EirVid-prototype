@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author 2021345
+ * @author Alany 2021345
  */
 public interface MoviesInterface {
      ArrayList<Movie> getMoviesList();

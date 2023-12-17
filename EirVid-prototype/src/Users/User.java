@@ -6,7 +6,7 @@ package Users;
 
 /**
  *
- * @author 2021267
+ * @author 2021267 / Magdalena
  */
 public class User implements UserInterface{
     private String password;
