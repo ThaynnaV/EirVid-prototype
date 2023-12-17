@@ -19,7 +19,7 @@ import java.sql.SQLException;
 
 /**
  *
- * @authors 2021345, 2021267, 2021288, 2021240   
+ * @authors Alany 2021345, Magdalena 2021267, Thaynna 2021288, Gabriel 2021240   
  */
 public class EirVidPrototype {
 

@@ -6,7 +6,7 @@ package Menu;
 
 /**
  *
- * @author 2021288
+ * @author Thaynna 2021288
  */
 public interface MovieMenuInterface {
     Menu getMenu();
