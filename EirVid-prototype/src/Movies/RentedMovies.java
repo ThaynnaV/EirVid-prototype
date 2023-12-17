@@ -68,8 +68,8 @@ public class RentedMovies implements RentedMoviesInterface{
         String useDatabaseByName = "USE " + this.db.getDbName();
         try {
             this.db.executeStmt(useDatabaseByName);
-            String query = String.format("INSERT INTO rented (email, movieId, rentId, date ) VALUES (\"%s\", \"%d\", \"%d\", \"%s\");",
-                            rented.getEmail(), rented.getMovieId(), rented.getRentOptionId(), rented.getDate());
+            String query = String.format("INSERT INTO rented (email, movieId, rentId, date, totalPrice ) VALUES (\"%s\", \"%d\", \"%d\", \"%s\", \"%f\" );",
+                            rented.getEmail(), rented.getMovieId(), rented.getRentOptionId(), rented.getDate(), rented.getTotalPrice());
             
             this.db.executeStmt(query);
             return true;
