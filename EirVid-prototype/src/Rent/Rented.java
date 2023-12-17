@@ -17,13 +17,15 @@ public class Rented implements RentedInterface{
     private int movieId;
     private int rentOptionId;
     private Timestamp date;
+    private double totalPrice;
     
     public Rented(){}
     
-    public Rented(String email,int movieId, int rentOptionId){
+    public Rented(String email,int movieId, int rentOptionId, double totalPrice){
         this.email = email;
         this.movieId = movieId;
         this.rentOptionId = rentOptionId;
+        this.totalPrice = totalPrice;
     }
     // GETTERS
     @Override
@@ -42,6 +44,10 @@ public class Rented implements RentedInterface{
     public Timestamp getDate(){
         return this.date;
     }
+    @Override
+    public double getTotalPrice(){
+        return this.totalPrice;
+    }
     // SETTERS
     @Override
     public void setEmail(String email){
@@ -58,6 +64,10 @@ public class Rented implements RentedInterface{
     @Override
     public void setDate(Timestamp date){
         this.date = date;
+    }
+    @Override
+    public void setTotalPrice(double totalPrice){
+        this.totalPrice = totalPrice;
     }
     @Override
     public void setDateToNow(){

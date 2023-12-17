@@ -75,7 +75,7 @@ public class Rent implements RentInterface{
      */
     @Override
     public String getFullRentItem(){
-       return "Description: " + this.description + ", Length: " + this.length + " min, Price: "+ this.price + " EUR";
+       return "Description: " + this.description + ", Length: " + this.length + " min, Increase of Movie Price for this duration: "+ this.price + " EUR";
     }
     
 }

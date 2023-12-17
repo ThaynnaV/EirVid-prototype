@@ -13,7 +13,7 @@ import java.util.ArrayList;
  *
  * @author 2021240
  */
-public class RentOptions {
+public class RentOptions implements RentOptionsInterface{
     private Database db;
     private ArrayList<Rent> options = new ArrayList<>(); 
     
@@ -54,17 +54,33 @@ public class RentOptions {
         }
     }
     
+    @Override
     public void displayRentOptions(){
         if(this.options.isEmpty()){
             System.out.println("No available rent options");
             return;
         }
          // Reference stack overflow: https://stackoverflow.com/questions/34526819/print-arraylist-in-java
-        for(Rent options : this.options) {
-            System.out.println(options.getFullRentItem());
+        for(Rent _options : this.options) {
+            System.out.println(_options.getFullRentItem());
         }
     }
     
+    public int getRentOptionPrice(int id){
+        if(this.options.isEmpty()){
+            System.out.println("No available rent options");
+            return 0;
+        }
+         // Reference stack overflow: https://stackoverflow.com/questions/34526819/print-arraylist-in-java
+        for(Rent option : this.options) {
+            if(option.getRentId() == id){
+                return option.getPrice();
+            }
+        }
+        return 0;
+    }
+    
+    @Override
     public ArrayList<Rent> getOptions(){
         return this.options;
     }

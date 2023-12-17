@@ -5,6 +5,7 @@
 package Menu;
 
 import DatabaseManagment.Database;
+import Movies.Movie;
 import Movies.Movies;
 import Movies.RentedMovies;
 import Rent.Rent;
@@ -87,10 +88,13 @@ public class MainMenu implements MainMenuInterface {
                     // Rent Movie
                     Rented rented = new Rented();
                     // if movie and rent option are selected 
-                    if (this.rentMovie(rentMenu, movieMenu, rented)) {
+                    if (this.rentMovie(rentMenu, movieMenu, rented, movies)) {
                         String currentUserEmail = userManagment.getCurrentUser().getEmail(); 
                         rented.setEmail(currentUserEmail);
                         rentedMovies.save(rented);
+                        // display rented movie
+                        movies.getMovieByIndex(rented.getMovieId()).printMovieInfo();
+                        System.out.println("Total Price paid based on rent option: " +rented.getTotalPrice());
                     }
                     break;
                 case 2:
@@ -118,7 +122,15 @@ public class MainMenu implements MainMenuInterface {
         return isReturn;
     }
 
-    private boolean rentMovie(RentMenu rentMenu, MovieMenu movieMenu, Rented rented) {
+    /**
+     * 
+     * @param rentMenu
+     * @param movieMenu
+     * @param rented
+     * @param movies
+     * @return 
+     */
+    private boolean rentMovie(RentMenu rentMenu, MovieMenu movieMenu, Rented rented, Movies movies) {
         int selectedMovie = 0;
         int rentMenuOption = 0;
         do {
@@ -143,6 +155,9 @@ public class MainMenu implements MainMenuInterface {
             rented.setMovieId(selectedMovie);
             rented.setRentOptionId(rentMenuOption);
             rented.setDateToNow();
+            Movie movie = movies.getMovieByIndex(selectedMovie);
+            double totalPrice = movie.getPrice() + rentMenu.getRentOptions().getRentOptionPrice(rentMenuOption);
+            rented.setTotalPrice(totalPrice);
             return true;
         }
         return false;

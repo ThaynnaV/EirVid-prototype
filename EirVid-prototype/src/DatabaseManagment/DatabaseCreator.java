@@ -46,13 +46,6 @@ public class DatabaseCreator {
                 return false;
             }
             
-            // INSERT values for initial movies if values already not exist
-            //boolean isMoviesCreated = this.createMovies();
-            //if(!isMoviesCreated){
-            //    System.out.println("Error inserting values to movie table");
-            //    return false;
-            //}
-            
             // INSERT values for initial rent options if values already not exist
             boolean isRentCreated = this.createRentOptions();
             if(!isRentCreated){
@@ -112,13 +105,6 @@ public class DatabaseCreator {
                             + ");"
             );
             
-            // Create table for Movies
-            /*this.stmt.execute(
-                    "CREATE TABLE IF NOT EXISTS movie ("
-                            + "movieId INT(10) NOT NULL PRIMARY KEY,"
-                            + "title VARCHAR(30)"
-                            + ");"
-            );*/
             this.stmt.execute(
                 "CREATE TABLE IF NOT EXISTS movie ("
                         + "movieId INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,"
@@ -155,6 +141,7 @@ public class DatabaseCreator {
                             + "movieId INT(10),"
                             + "rentId INT(10),"
                             + "date TIMESTAMP,"
+                            + "totalPrice DOUBLE,"
                             + "FOREIGN KEY(email) REFERENCES user(email),"
                             + "FOREIGN KEY(movieId) REFERENCES movie(movieId),"
                             + "FOREIGN KEY(rentId) REFERENCES rent(rentId)"
@@ -224,7 +211,7 @@ public class DatabaseCreator {
      */
     public boolean createRentOptions(){
         String value = "INSERT IGNORE INTO rent (rentId, description, length, price)\n"
-                    + "VALUES (1,'One minute rent', 1, 5), (2,'One hour rent', 60, 10), (3,'One day rent', 1440, 20); \n";
+                    + "VALUES (1,'One minute rent', 1, 0), (2,'One hour rent', 60, 5), (3,'One day rent', 1440, 10); \n";
         return this.insertValuesToTable(value);
     }
     

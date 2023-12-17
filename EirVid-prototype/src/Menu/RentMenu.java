@@ -14,10 +14,12 @@ import java.util.ArrayList;
  */
 public class RentMenu implements RentMenuInterface{
     private Menu menu = new Menu("Rent Menu", "Select Rent Duration by typing a number next to item");
-        
+    private RentOptions rentOptions;
+    
     public RentMenu(){}
     
     public RentMenu(RentOptions rentOptions){
+        this.rentOptions = rentOptions;
         int selector = 1;
         ArrayList<MenuItem> menuItems = new ArrayList<>();
         // for each rent option
@@ -29,6 +31,7 @@ public class RentMenu implements RentMenuInterface{
         this.menu.addMenuItem(selector, "Back");
     }
     
+    @Override
     public Menu getMenu(){
         return this.menu;
     }
@@ -37,7 +40,12 @@ public class RentMenu implements RentMenuInterface{
      * 
      * @return selected rent option as integer 
      */
+    @Override
     public int showMenu(){
         return this.menu.showMenu();
+    }
+    
+    public RentOptions getRentOptions(){
+        return this.rentOptions;
     }
 }

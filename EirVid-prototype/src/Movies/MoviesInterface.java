@@ -15,4 +15,5 @@ public interface MoviesInterface {
      Movie getMovieByIndex(int index);
      int getMovieIdByIndex(int index);
      void listMovieTitles();
+     Movie getMovieById(int id);
 }

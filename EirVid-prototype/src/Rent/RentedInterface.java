@@ -15,10 +15,12 @@ public interface RentedInterface {
     int getMovieId();
     int getRentOptionId();
     Timestamp getDate();
+    double getTotalPrice();
     void setEmail(String email);
     void setMovieId(int movieId);
     void setRentOptionId( int rentOptionId);
     void setDate(Timestamp date);
     void setDateToNow();
+    void setTotalPrice(double totalPrice);
 }
 

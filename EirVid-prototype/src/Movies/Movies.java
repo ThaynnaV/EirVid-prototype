@@ -4,9 +4,6 @@
  */
 package Movies;
 
-import DatabaseManagment.Database;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -15,25 +12,8 @@ import java.util.ArrayList;
  */
 public class Movies implements MoviesInterface {
     private final ArrayList<Movie> movies = new ArrayList<>();
-    private final Database db;
-    
-    public Movies(Database db ) throws SQLException{
-        this.db = db;
-        this.getMoviesFromDatabase();
-    }
-    
-    private void getMoviesFromDatabase() throws SQLException{
-        String useDatabaseByName = "USE " + this.db.getDbName();
-        this.db.executeStmt(useDatabaseByName);
-        try (ResultSet rs = this.db.executeStmtQuery("SELECT * from movie")) {
-            while(rs.next()){
-                int id = rs.getInt("movieId");
-                String title = rs.getString("title");
-                Movie newMovie = new Movie(id, title);
-                this.movies.add(newMovie);
-            }
-        }
-    }
+        
+    public Movies(){}
     
     @Override
     public ArrayList<Movie> getMoviesList(){
@@ -43,6 +23,21 @@ public class Movies implements MoviesInterface {
     @Override
     public Movie getMovieByIndex(int index){
         return this.movies.get(index);
+    }
+    
+    /**
+     * Returns movie based on id
+     * @param id
+     * @return 
+     */
+    @Override
+    public Movie getMovieById(int id){
+        for (Movie movie : this.movies) {
+            if (movie.getMovieId() == id) {
+                return movie; 
+            }
+        }
+        return null;
     }
     
     @Override
@@ -58,8 +53,5 @@ public class Movies implements MoviesInterface {
         }
     }
     
-    public Database getDb(){
-        return this.db;
-    }
     
 }

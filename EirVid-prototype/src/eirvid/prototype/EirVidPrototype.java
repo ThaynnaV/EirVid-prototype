@@ -31,9 +31,9 @@ public class EirVidPrototype {
         // Database class object connect to database and create initial data
         Database db = new Database();
         // Movies class object -- has all available movies
-        Movies movies = new Movies(db);
+        Movies movies = new Movies();
         
-        MovieReader movieReader = new MovieReader(movies);
+        MovieReader movieReader = new MovieReader(movies, db);
         boolean success = movieReader.readMoviesFromCSV("./Movie_Metadata.csv");
         if(!success){
             System.out.println("Error reading movies from file");

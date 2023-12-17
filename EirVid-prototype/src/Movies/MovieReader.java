@@ -4,6 +4,7 @@
  */
 package Movies;
 
+import DatabaseManagment.Database;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -18,9 +19,11 @@ import java.util.List;
  */
 public class MovieReader {
     private final Movies movies;
-
-    public MovieReader(Movies movies) {
+    private final Database db;
+    
+    public MovieReader(Movies movies, Database db) {
         this.movies = movies;
+        this.db = db;
     }
     
    public boolean readMoviesFromCSV(String filePath) {
@@ -56,7 +59,7 @@ public class MovieReader {
                     String insertQuery = "INSERT IGNORE INTO movie (title, original_language, original_title, overview, popularity, " +
                         "release_date, runtime, tagline, vote_average, vote_count, price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                     
-                    try (PreparedStatement preparedStatement = movies.getDb().getConn().prepareStatement(insertQuery)) {
+                    try (PreparedStatement preparedStatement = this.db.getConn().prepareStatement(insertQuery)) {
                         preparedStatement.setString(1, newMovie.getMovieTitle());
                         preparedStatement.setString(2, newMovie.getOriginalLanguage());
                         preparedStatement.setString(3, newMovie.getOriginalTitle());
