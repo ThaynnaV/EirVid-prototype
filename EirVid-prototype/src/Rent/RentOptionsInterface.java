@@ -2,17 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package Menu;
+package Rent;
 
-import Users.UserManagment;
+import java.util.ArrayList;
 
 /**
  *
- * @author 2021288
+ * @author 2021240
  */
-public interface LoginMenuInterface {
-    Menu getMenu();
-    boolean showMenu(UserManagment userManagment);
+public interface RentOptionsInterface {
+   void displayRentOptions();
+   ArrayList<Rent> getOptions(); 
 }
-
-

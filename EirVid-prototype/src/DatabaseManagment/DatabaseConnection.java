@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DatabaseManagment;
-
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;

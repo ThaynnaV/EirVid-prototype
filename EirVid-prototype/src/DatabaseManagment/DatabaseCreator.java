@@ -46,13 +46,6 @@ public class DatabaseCreator {
                 return false;
             }
             
-            // INSERT values for initial movies if values already not exist
-            boolean isMoviesCreated = this.createMovies();
-            if(!isMoviesCreated){
-                System.out.println("Error inserting values to movie table");
-                return false;
-            }
-            
             // INSERT values for initial rent options if values already not exist
             boolean isRentCreated = this.createRentOptions();
             if(!isRentCreated){
@@ -107,18 +100,27 @@ public class DatabaseCreator {
             // Create table for Users
             this.stmt.execute(
                     "CREATE TABLE IF NOT EXISTS user ("
-                            + "userId INT(10) NOT NULL PRIMARY KEY,"
-                            + "email VARCHAR(30),"
+                            + "email VARCHAR(100) NOT NULL PRIMARY KEY,"
                             + "password VARCHAR(30)"
                             + ");"
             );
             
-            // Create table for Movies
             this.stmt.execute(
-                    "CREATE TABLE IF NOT EXISTS movie ("
-                            + "movieId INT(10) NOT NULL PRIMARY KEY,"
-                            + "title VARCHAR(30)"
-                            + ");"
+                "CREATE TABLE IF NOT EXISTS movie ("
+                        + "movieId INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,"
+                        + "title VARCHAR(255),"
+                        + "original_language VARCHAR(10),"
+                        + "original_title VARCHAR(255),"
+                        + "overview TEXT,"
+                        + "popularity DOUBLE,"
+                        + "release_date VARCHAR(28),"
+                        + "runtime INT,"
+                        + "tagline VARCHAR(255),"
+                        + "vote_average DOUBLE,"
+                        + "vote_count INT,"
+                        + "price DOUBLE,"
+                        + "UNIQUE KEY unique_title_release_date (title, release_date)"
+                        + ");"
             );
             
             // Create table for Rent
@@ -134,12 +136,13 @@ public class DatabaseCreator {
             // Create table Rented movies
             this.stmt.execute(
                     "CREATE TABLE IF NOT EXISTS rented ("
-                            + "rentedId INT(10) NOT NULL PRIMARY KEY,"
-                            + "userId INT(10),"
+                            + "rentedId INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,"
+                            + "email VARCHAR(100),"
                             + "movieId INT(10),"
                             + "rentId INT(10),"
                             + "date TIMESTAMP,"
-                            + "FOREIGN KEY(userId) REFERENCES user(userId),"
+                            + "totalPrice DOUBLE,"
+                            + "FOREIGN KEY(email) REFERENCES user(email),"
                             + "FOREIGN KEY(movieId) REFERENCES movie(movieId),"
                             + "FOREIGN KEY(rentId) REFERENCES rent(rentId)"
                             + ");"
@@ -157,7 +160,7 @@ public class DatabaseCreator {
             this.stmt.execute(
                     "CREATE TABLE IF NOT EXISTS menu ("
                             + "menuId INT(10) NOT NULL PRIMARY KEY,"
-                            + "text VARCHAR(40),"
+                            + "text VARCHAR(200),"
                             + "title VARCHAR(40)"
                             + ");"
             );
@@ -187,8 +190,8 @@ public class DatabaseCreator {
      * @return - true if is success
      */
     public boolean createUsers(){
-        String value =  "INSERT IGNORE INTO user (userId, email, password)\n"
-                    + "VALUES (1, 'admin@gmial.com', 'admin'),(2,'test@gmail.com', '1234'); \n";
+        String value =  "INSERT IGNORE INTO user (email, password)\n"
+                    + "VALUES ('admin@gmail.com', 'admin'),('test@gmail.com', '1234'); \n";
         return this.insertValuesToTable(value);
     }
     
@@ -208,7 +211,7 @@ public class DatabaseCreator {
      */
     public boolean createRentOptions(){
         String value = "INSERT IGNORE INTO rent (rentId, description, length, price)\n"
-                    + "VALUES (1,'One minute rent', 1, 5), (2,'One hour rent', 60, 10), (3,'One day rent', 1440, 20); \n";
+                    + "VALUES (1,'One minute rent', 1, 0), (2,'One hour rent', 60, 5), (3,'One day rent', 1440, 10); \n";
         return this.insertValuesToTable(value);
     }
     
@@ -257,4 +260,6 @@ public class DatabaseCreator {
     }
     
 }
+
+
 

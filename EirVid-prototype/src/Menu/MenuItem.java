@@ -15,19 +15,24 @@ public class MenuItem implements MenuItemInterface{
     public MenuItem(){}
     
     public MenuItem(int selector, String description){
-        this.createMenuItem(selector, description);
+        this.selector = selector;
+        this.description = description;
     }
     
+    @Override
     public void createMenuItem (int selector, String description){
         this.selector = selector;
         this.description = description;        
     }
     
+    @Override
     public int getSelector(){
         return this.selector;
     }
     
+    @Override
     public String getDescription(){
         return this.description;
     }
 }
+

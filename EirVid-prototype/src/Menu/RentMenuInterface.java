@@ -4,15 +4,11 @@
  */
 package Menu;
 
-import Users.UserManagment;
-
 /**
  *
  * @author 2021288
  */
-public interface LoginMenuInterface {
+public interface RentMenuInterface {
     Menu getMenu();
-    boolean showMenu(UserManagment userManagment);
+    int showMenu();
 }
-
-

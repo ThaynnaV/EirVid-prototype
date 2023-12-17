@@ -4,11 +4,16 @@
  */
 package Movies;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Alany 2021345
  */
 public interface MoviesInterface {
-     int getMovieId();
-     String getMovieTitle(); 
+     ArrayList<Movie> getMoviesList();
+     Movie getMovieByIndex(int index);
+     int getMovieIdByIndex(int index);
+     void listMovieTitles();
+     Movie getMovieById(int id);
 }
