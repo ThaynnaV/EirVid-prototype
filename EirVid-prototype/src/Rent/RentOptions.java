@@ -13,7 +13,7 @@ import java.util.ArrayList;
  *
  * @author 2021240
  */
-public class RentOptions {
+public class RentOptions implements RentOptionsInterface {
     private Database db;
     private ArrayList<Rent> options = new ArrayList<>(); 
     
