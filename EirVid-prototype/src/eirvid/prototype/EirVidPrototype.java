@@ -11,6 +11,7 @@ import Menu.MovieMenu;
 import Menu.RentMenu;
 import Movies.MovieReader;
 import Movies.Movies;
+import Movies.RecommendedMovies;
 import Movies.RentedMovies;
 import Rent.RentOptions;
 import Users.UserManagment;
@@ -34,6 +35,7 @@ public class EirVidPrototype {
         Movies movies = new Movies();
         
         MovieReader movieReader = new MovieReader(movies, db);
+        
         boolean success = movieReader.readMoviesFromCSV("./Movie_Metadata.csv");
         if(!success){
             System.out.println("Error reading movies from file");
@@ -53,7 +55,8 @@ public class EirVidPrototype {
         RentMenu rentMenu = new RentMenu(rentOptions);
         // Rented movies object -- to get rented movies from database
         RentedMovies rentedMovies = new RentedMovies(db);
-        
+        // Recommended movies object -- to get recomended movies from database
+        RecommendedMovies recMovies = new RecommendedMovies(db);
         // VARIABLES
         boolean isLoggedIn; // check if user is logged in
         boolean isExit = false; // if isExit is true exit application
@@ -63,7 +66,7 @@ public class EirVidPrototype {
             // If logged in  
             if(isLoggedIn){
                 // Show Main menu options rent a movie, See my rented movies, view recommended movies, logout, exit
-                boolean isMainMenuBack = mainMenu.showMenu(userManagment, rentMenu, movieMenu, rentedMovies, movies);
+                boolean isMainMenuBack = mainMenu.showMenu(userManagment, rentMenu, movieMenu, rentedMovies, movies, recMovies);
                 // if true returned go back to login, if false returned exit application by exiting while loop
                 if(!isMainMenuBack){
                     isExit = true;

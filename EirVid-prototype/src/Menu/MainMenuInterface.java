@@ -5,6 +5,7 @@
 package Menu;
 
 import Movies.Movies;
+import Movies.RecommendedMovies;
 import Movies.RentedMovies;
 import Users.UserManagment;
 
@@ -14,5 +15,5 @@ import Users.UserManagment;
  */
 public interface MainMenuInterface {
      Menu getMenu();
-     boolean showMenu(UserManagment userManagment, RentMenu rentMenu, MovieMenu movieMenu, RentedMovies rentedMovies, Movies movies);
+     boolean showMenu(UserManagment userManagment, RentMenu rentMenu, MovieMenu movieMenu, RentedMovies rentedMovies, Movies movies, RecommendedMovies recMovies);
 }

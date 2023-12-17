@@ -6,11 +6,11 @@ package Movies;
 
 import DatabaseManagment.Database;
 import Rent.Rented;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,14 +26,36 @@ public class RecommendedMovies {
         this.db = db;
     }
     
-    public boolean getRentedMovies(){
+    /**
+     * Display top 5 recommended movies based on 5 most rented movies in last 5 minutes
+     */
+    public void displayRecommendedMovies(){
+        this.recomendations.clear();
+        this.getRentedMovies();
+        if(this.recomendations.isEmpty()){
+            System.out.println("There were no rented movies in last 5 minutes");
+            return;
+        }
+        // Sort the recommendations list based on rent count (descending order)
+        Collections.sort(this.recomendations, (rec1, rec2) -> Integer.compare(rec2.getRentCount(), rec1.getRentCount()));
+        // Display the top 5 recommended movies
+        int topCount = Math.min(5, this.recomendations.size());
+        for (int i = 0; i < topCount; i++) {
+            RecommendedMovie recMovie = this.recomendations.get(i);
+            System.out.println("* Title: " + recMovie.getMovie().getMovieTitle() 
+                    + " - Price: " + recMovie.getMovie().getPrice()
+                    + " - Rent Count: " + recMovie.getRentCount());
+        }
+    }
+    
+    private boolean getRentedMovies(){
         String useDatabaseByName = "USE " + this.db.getDbName();
         boolean isFound = false;
         // Integer map to store movies and count repeat of same movie
         Map<Integer, RecommendedMovie> movieMap = new HashMap<>();
         try {
             this.db.executeStmt(useDatabaseByName);
-            String query = "SELECT * FROM rented r INNER JOIN movie m on r.movieId = m.movieId ";
+            String query = "SELECT * FROM rented r INNER JOIN movie m on r.movieId = m.movieId WHERE r.date >= NOW() - INTERVAL 5 MINUTE; ";
             
             try (ResultSet rs = this.db.executeStmtQuery(query)) {
                 do{
@@ -56,13 +78,13 @@ public class RecommendedMovies {
                         String original_title  = rs.getString("original_title");
                         String overview  = rs.getString("overview");
                         double popularity = rs.getDouble("popularity");   
-                        Date release_date = rs.getDate("release_date");
+                        String release_date = rs.getString("release_date");
                         int runtime = rs.getInt("runtime");
                         String tagline  = rs.getString("tagline");
                         double vote_average = rs.getDouble("vote_average");
                         int vote_count = rs.getInt("vote_count");
                         double price = rs.getDouble("price");
-                        Movie newMovie = new Movie(movieId, title, original_title, original_language, overview, popularity, release_date.toString(), runtime, tagline, vote_average, vote_count, price);
+                        Movie newMovie = new Movie(movieId, title, original_title, original_language, overview, popularity, release_date, runtime, tagline, vote_average, vote_count, price);
                                                 
                         // Check if the movie is already in the map
                         if (movieMap.containsKey(movieId)) {

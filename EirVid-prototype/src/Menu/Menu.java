@@ -91,6 +91,7 @@ public class Menu implements MenuInterface {
     // METHODS
     @Override
     public int showMenu(){
+        System.out.println("\n");
         System.out.println(this.menuTitle);
         // Reference stack overflow: https://stackoverflow.com/questions/34526819/print-arraylist-in-java
         for(MenuItem menu_item : this.menuItems) {

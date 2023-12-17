@@ -7,6 +7,7 @@ package Menu;
 import DatabaseManagment.Database;
 import Movies.Movie;
 import Movies.Movies;
+import Movies.RecommendedMovies;
 import Movies.RentedMovies;
 import Rent.Rent;
 import Rent.Rented;
@@ -76,7 +77,7 @@ public class MainMenu implements MainMenuInterface {
      * @return false to exit application
      */
     @Override
-    public boolean showMenu(UserManagment userManagment, RentMenu rentMenu, MovieMenu movieMenu, RentedMovies rentedMovies, Movies movies ) {
+    public boolean showMenu(UserManagment userManagment, RentMenu rentMenu, MovieMenu movieMenu, RentedMovies rentedMovies, Movies movies, RecommendedMovies recMovies ) {
         boolean isDisplayMenu = true;
         boolean isReturn = false;
         Rent rent = new Rent();
@@ -102,8 +103,9 @@ public class MainMenu implements MainMenuInterface {
                     break;
                 case 3:
                     // View recommended Movies
-                    // rent.viewRecomendedMovies();
-                    
+                    System.out.println("\n");
+                    System.out.println("Recommendet Movies -- most viewed in last 5 minutes");
+                    recMovies.displayRecommendedMovies();
                     break;
                 case 4:
                     // Logout --? return to login screen
@@ -134,6 +136,7 @@ public class MainMenu implements MainMenuInterface {
         int selectedMovie = 0;
         int rentMenuOption = 0;
         do {
+            System.out.println("\n");
             System.out.println("RENT MOVIES");
             selectedMovie = movieMenu.showMenu();
             // if selected movie id is last in menu, then we selected back button
