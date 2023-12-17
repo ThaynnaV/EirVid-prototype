@@ -8,7 +8,7 @@ import Users.UserManagment;
 
 /**
  *
- * @author 2021288
+ * @author Thaynna 2021288
  */
 public interface LoginMenuInterface {
     Menu getMenu();

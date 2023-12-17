@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author 2021288
+ * @author Thaynna 2021288
  */
 public interface MenuInterface {
     void addMenuItem(int selector, String description);
